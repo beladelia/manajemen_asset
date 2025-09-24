@@ -1,23 +1,29 @@
 @extends('layouts.app')
 
-@section('content')
-<h2>Dashboard</h2>
+@section('title','Dashboard')
 
+@section('content')
+<div class="d-flex justify-content-end mb-3">
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+    </form>
+</div>
 <div class="row mb-4">
-    <div class="col-md-6">
-        <div class="card summary">
+    <div class="col-md-6 mb-3">
+        <div class="card-summary">
             <h5>Ringkasan Website <span class="badge bg-light text-dark">Total: 33</span></h5>
-            <div class="d-flex justify-content-around mt-2">
+            <div class="d-flex justify-content-around mt-3">
                 <div>Aktif <br><b>20</b></div>
                 <div>Maintenance <br><b>3</b></div>
                 <div>Tidak Aktif <br><b>10</b></div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="card summary">
+    <div class="col-md-6 mb-3">
+        <div class="card-summary">
             <h5>Ringkasan Server <span class="badge bg-light text-dark">Total: 10</span></h5>
-            <div class="d-flex justify-content-around mt-2">
+            <div class="d-flex justify-content-around mt-3">
                 <div>Aktif <br><b>7</b></div>
                 <div>Maintenance <br><b>2</b></div>
                 <div>Tidak Aktif <br><b>1</b></div>
@@ -27,12 +33,20 @@
 </div>
 
 <!-- Tabel Data -->
-<div class="card p-3">
-    <div class="d-flex justify-content-between align-items-center mb-2">
+<div class="table-card">
+    <div class="d-flex justify-content-between align-items-center mb-3">
         <h5>Data Website & Server</h5>
-        <input type="text" class="form-control w-25" placeholder="Cari nama/URL/PIC">
+        <div class="d-flex align-items-center gap-2">
+            <select class="form-select form-select-sm w-auto">
+                <option>Semua Status</option>
+                <option>Aktif</option>
+                <option>Maintenance</option>
+                <option>Tidak Aktif</option>
+            </select>
+            <input type="text" class="form-control form-control-sm w-50" placeholder="Cari nama/URL/PIC">
+        </div>
     </div>
-    <table class="table table-striped">
+    <table class="table table-striped align-middle">
         <thead>
             <tr>
                 <th>Nama</th>

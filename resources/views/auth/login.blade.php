@@ -5,17 +5,83 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Login - SIMASTER</title>
   <style>
-    body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;display:flex;align-items:center;justify-content:center;height:100vh;background:#f4f6f9}
-    .card{width:100%;max-width:420px;background:#fff;padding:32px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.08);text-align:center}
-    .logo.logo {display: block;margin: 0 auto 15px; /* center + kasih jarak bawah */ width: 80px; /* atur ukuran */height: auto;}
-    h1{color:#7a0e0e;margin:6px 0 4px;font-size:28px}
-    p.sub{color:#555;margin-bottom:18px;font-size:14px}
-    .input{width:100%;padding:12px 14px;margin:8px 0;border:1px solid #e2e8f0;border-radius:8px;font-size:15px}
-    .actions{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
-    .btn{display:block;width:100%;background:#7a0e0e;color:#fff;border:none;padding:12px;border-radius:8px;font-weight:600;margin-top:14px;cursor:pointer}
-    .error{color:#a00;font-size:13px;text-align:left;margin-top:6px}
-    label.rem{display:flex;gap:8px;align-items:center;color:#444;font-size:14px}
-    a.small{font-size:13px;color:#666;text-decoration:none}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+      background:#f4f6f9
+    }
+    .card{
+      width:100%;
+      max-width:460px;
+      background:#fff;
+      padding:32px;
+      border-radius:12px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.08);
+      text-align:center
+    }
+    .logo{
+      display:block;
+      margin:0 auto 15px;
+      width:120px;
+      height:auto
+    }
+    h1{
+      color:#7a0e0e;
+      margin:6px 0 4px;
+      font-size:28px
+    }
+    p.sub{
+      color:#555;
+      margin-bottom:18px;
+      font-size:14px
+    }
+    .input,
+    .btn{
+      width:100%;
+      padding:12px 14px;
+      margin:8px 0;
+      font-size:15px;
+      border-radius:8px;
+      box-sizing:border-box
+    }
+    .input{
+      border:1px solid #e2e8f0
+    }
+    .actions{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-top:8px
+    }
+    .btn{
+      background:#7a0e0e;
+      color:#fff;
+      border:none;
+      font-weight:600;
+      cursor:pointer
+    }
+    .error{
+      color:#a00;
+      font-size:13px;
+      text-align:left;
+      margin-top:6px
+    }
+    label.rem{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      color:#444;
+      font-size:14px
+    }
+    a.small{
+      font-size:13px;
+      color:#666;
+      text-decoration:none
+    }
   </style>
 </head>
 <body>
