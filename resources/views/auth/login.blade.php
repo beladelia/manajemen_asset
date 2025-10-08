@@ -4,6 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Login - SIMASTER</title>
+
+  <!-- Font Awesome buat ikon mata -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     body{
       margin:0;
@@ -51,6 +55,21 @@
     .input{
       border:1px solid #e2e8f0
     }
+    .password-wrapper {
+      position: relative;
+    }
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #333;
+      font-size: 18px;
+    }
+    .toggle-password:hover {
+      color: #7a0e0e;
+    }
     .actions{
       display:flex;
       align-items:center;
@@ -96,7 +115,10 @@
       <input class="input" type="email" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
       @error('email') <div class="error">{{ $message }}</div> @enderror
 
-      <input class="input" type="password" name="password" placeholder="Password" required>
+      <div class="password-wrapper">
+        <input class="input" type="password" id="password" name="password" placeholder="Password" required>
+        <i class="fa-solid fa-eye-slash toggle-password" id="togglePassword"></i>
+      </div>
       @error('password') <div class="error">{{ $message }}</div> @enderror
 
       <div class="actions">
@@ -109,5 +131,23 @@
 
     <div style="margin-top:12px;font-size:13px;color:#777">© 2025 Kementerian Pertahanan RI</div>
   </div>
+
+  <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const passwordInput = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', function () {
+      const isHidden = passwordInput.getAttribute('type') === 'password';
+      passwordInput.setAttribute('type', isHidden ? 'text' : 'password');
+      // Saat password terlihat → tampilkan mata terbuka
+      if (isHidden) {
+        this.classList.remove('fa-eye-slash');
+        this.classList.add('fa-eye');
+      } else {
+        this.classList.remove('fa-eye');
+        this.classList.add('fa-eye-slash');
+      }
+    });
+  </script>
 </body>
 </html>

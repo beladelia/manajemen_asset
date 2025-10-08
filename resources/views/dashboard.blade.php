@@ -3,12 +3,6 @@
 @section('title','Dashboard')
 
 @section('content')
-<div class="d-flex justify-content-end mb-3">
-    <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit" class="btn btn-danger btn-sm">Logout</button>
-    </form>
-</div>
 <div class="row mb-4">
     <div class="col-md-6 mb-3">
         <div class="card-summary">

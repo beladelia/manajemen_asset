@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMASTER</title>
+    <title>@yield('title') - SIMASTER</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -12,7 +12,7 @@
             background-color: #f4f6f9;
         }
         .sidebar {
-            background-color: #660708; /* merah maroon */
+            background-color: #660708;
             color: #fff;
             min-height: 100vh;
             padding: 20px 10px;
@@ -24,14 +24,15 @@
             color: #fff;
             margin: 8px 0;
             border-radius: 8px;
+            transition: 0.2s;
         }
         .sidebar .nav-link.active, .sidebar .nav-link:hover {
             background: #fff;
-            color: #800000;
+            color: #000;
             font-weight: bold;
         }
         .main {
-            margin-left: 230px; /* biar ga ketutup sidebar */
+            margin-left: 230px;
             width: calc(100% - 230px);
         }
         .navbar-custom {
@@ -67,19 +68,38 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="text-center mb-4">
-            <img src="{{ asset('images/logo_kemhan.png') }}" 
-                 alt="Logo" width="80">
+            <img src="{{ asset('images/logo_kemhan.png') }}" alt="Logo" width="80">
             <h5 class="mt-2">SIMASTER</h5>
             <p class="small">Sistem Informasi Manajemen Aset Terpadu</p>
         </div>
         <h6>Super Admin</h6>
         <nav class="nav flex-column">
-            <a class="nav-link active" href="#"><i class="fa fa-home"></i> Dashboard</a>
-            <a class="nav-link" href="#"><i class="fa fa-server"></i> Kelola Server</a>
-            <a class="nav-link" href="#"><i class="fa fa-globe"></i> Kelola Website</a>
-            <a class="nav-link" href="#"><i class="fa fa-file-alt"></i> Kelola Laporan</a>
-            <a class="nav-link" href="#"><i class="fa fa-users"></i> Kelola Pengguna</a>
+            <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" 
+               href="{{ route('dashboard') }}">
+               <i class="fa fa-home"></i> Dashboard
+            </a>
+            <a class="nav-link {{ request()->routeIs('kelolaServer') ? 'active' : '' }}" 
+               href="{{ route('kelolaServer') }}">
+               <i class="fa fa-server"></i> Kelola Server
+            </a>
+            <a class="nav-link {{ request()->routeIs('kelolaWebsite') ? 'active' : '' }}" 
+               href="{{ route('kelolaWebsite') }}">
+               <i class="fa fa-globe"></i> Kelola Website
+            </a>
+            <a class="nav-link {{ request()->routeIs('kelolaLaporan') ? 'active' : '' }}" 
+               href="{{ route('kelolaLaporan') }}">
+               <i class="fa fa-file-alt"></i> Kelola Laporan
+            </a>
+            <a class="nav-link {{ request()->routeIs('kelolaPengguna') ? 'active' : '' }}" 
+               href="{{ route('kelolaPengguna') }}">
+               <i class="fa fa-users"></i> Kelola Pengguna
+            </a>
         </nav>
+
+        <form action="{{ route('logout') }}" method="POST" class="mt-4 text-center">
+            @csrf
+            <button type="submit" class="btn btn-danger w-75">Logout</button>
+        </form>
     </div>
 
     <!-- Main Content -->
