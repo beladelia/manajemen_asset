@@ -75,4 +75,79 @@
         </tbody>
     </table>
 </div>
+
+<!-- Grafik -->
+<div class="row mt-5">
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h5 class="mb-3">Grafik Status Website</h5>
+            <canvas id="websiteChart"></canvas>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-4">
+            <h5 class="mb-3">Grafik Status Server</h5>
+            <canvas id="serverChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Tambahkan Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Data statis untuk sementara
+    const websiteData = {
+        labels: ['Aktif', 'Maintenance', 'Tidak Aktif'],
+        datasets: [{
+            label: 'Jumlah Website',
+            data: [20, 3, 10],
+            backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+        }]
+    };
+
+    const serverData = {
+        labels: ['Aktif', 'Maintenance', 'Tidak Aktif'],
+        datasets: [{
+            label: 'Jumlah Server',
+            data: [7, 2, 1],
+            backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+        }]
+    };
+
+    // Pie Chart Website
+    new Chart(document.getElementById('websiteChart'), {
+        type: 'pie',
+        data: websiteData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' },
+                title: {
+                    display: true,
+                    text: 'Status Website'
+                }
+            }
+        }
+    });
+
+    // Bar Chart Server
+    new Chart(document.getElementById('serverChart'), {
+        type: 'bar',
+        data: serverData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Status Server'
+                }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
 @endsection

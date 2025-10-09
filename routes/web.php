@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ServerController;
 
 // Redirect root ke login
 Route::get('/', function () {
@@ -26,27 +27,40 @@ Route::middleware('auth')->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
-    // Kelola Server
-    Route::get('/kelolaServer', function () {
+    // =====================
+    // 💾 Kelola Server
+    // =====================
+    Route::get('/kelola-server', function () {
         return view('kelolaServer');
     })->name('kelolaServer');
 
-    // Detail Kelola Server
+    // 🔍 Detail Server
     Route::get('/kelola-server/{id}', [ServerController::class, 'show'])->name('kelolaServer.detail');
 
+    // ✏️ Edit Server
+    Route::get('/kelola-server/{id}/edit', [ServerController::class, 'edit'])->name('server.edit');
 
-    // Kelola Website
-    Route::get('/kelolaWebsite', function () {
+    // 🗑️ Delete Server (🔧 nama route diganti supaya sesuai dengan Blade)
+    Route::delete('/kelola-server/{id}', [ServerController::class, 'destroy'])->name('server.destroy');
+
+    // =====================
+    // 🌐 Kelola Website
+    // =====================
+    Route::get('/kelola-website', function () {
         return view('kelolaWebsite');
     })->name('kelolaWebsite');
 
-    // Kelola Laporan
-    Route::get('/kelolaLaporan', function () {
+    // =====================
+    // 📊 Kelola Laporan
+    // =====================
+    Route::get('/kelola-laporan', function () {
         return view('kelolaLaporan');
     })->name('kelolaLaporan');
 
-    // Kelola Pengguna
-    Route::get('/kelolaPengguna', function () {
+    // =====================
+    // 👤 Kelola Pengguna
+    // =====================
+    Route::get('/kelola-pengguna', function () {
         return view('kelolaPengguna');
     })->name('kelolaPengguna');
 

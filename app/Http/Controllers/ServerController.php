@@ -8,8 +8,8 @@ class ServerController extends Controller
 {
     public function show($id)
     {
-        // Data dummy dulu
-        $server = [
+        // Dummy data sementara
+        $server = (object) [
             'id' => $id,
             'nama' => 'Server ' . $id,
             'status' => 'Maintenance',
@@ -26,8 +26,21 @@ class ServerController extends Controller
                 '10 Desember 2023 - Pembaruan Firmware',
                 '5 November 2023 - Pembersihan Internal',
             ],
+            'gambar' => asset('images/server-rack.png'), // contoh gambar
         ];
 
         return view('layouts.detailServer', compact('server'));
+    }
+
+    public function edit($id)
+    {
+        // nanti bisa tampilkan form edit di sini
+        return "Halaman edit server ID: " . $id;
+    }
+
+    public function destroy($id)
+    {
+        // nanti logika delete-nya di sini
+        return redirect()->route('server.index')->with('success', 'Server berhasil dihapus!');
     }
 }

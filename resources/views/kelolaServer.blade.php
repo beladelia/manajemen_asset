@@ -61,60 +61,41 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1.</td>
-                    <td>ROUTER</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td><span class="badge bg-success">Aktif</span></td>
-                    <td><button class="btn btn-light btn-sm"><i class="fa fa-eye"></i> Detail</button></td>
-                </tr>
-                <tr>
-                    <td>2.</td>
-                    <td>SERVER</td>
-                    <td>-</td>
-                    <td>SIEHAN</td>
-                    <td><a href="#">siehan.kemhan.go.id</a></td>
-                    <td><span class="badge bg-success">Aktif</span></td>
-                    <td><button class="btn btn-light btn-sm"><i class="fa fa-eye"></i> Detail</button></td>
-                </tr>
-                <tr>
-                    <td>3.</td>
-                    <td>STORAGE</td>
-                    <td>-</td>
-                    <td>SIEHAN</td>
-                    <td><a href="#">siehan.kemhan.go.id</a></td>
-                    <td><span class="badge bg-success">Aktif</span></td>
-                    <td><button class="btn btn-light btn-sm"><i class="fa fa-eye"></i> Detail</button></td>
-                </tr>
-                <tr>
-                    <td>4.</td>
-                    <td>SERVER</td>
-                    <td>192.168.1.6</td>
-                    <td>CLOUD STORAGE - PUSDATIN CLOUD</td>
-                    <td><a href="#">192.168.1.6</a></td>
-                    <td><span class="badge bg-warning text-dark">Maintenance</span></td>
-                    <td><button class="btn btn-light btn-sm"><i class="fa fa-eye"></i> Detail</button></td>
-                </tr>
-                <tr>
-                    <td>5.</td>
-                    <td>SERVER</td>
-                    <td>192.168.1.7</td>
-                    <td>CMS - PUSDATIN CLOUD</td>
-                    <td><a href="#">http://192.168.1.6:88/</a></td>
-                    <td><span class="badge bg-success">Aktif</span></td>
-                    <td><button class="btn btn-light btn-sm"><i class="fa fa-eye"></i> Detail</button></td>
-                </tr>
-                <tr>
-                    <td>6.</td>
-                    <td>SERVER</td>
-                    <td>192.168.1.8</td>
-                    <td>DOCKER MANAGEMENT - PUSDATIN CLOUD</td>
-                    <td><a href="#">http://192.168.1.6:9000/</a></td>
-                    <td><span class="badge bg-danger">Tidak Aktif</span></td>
-                    <td><button class="btn btn-light btn-sm"><i class="fa fa-eye"></i> Detail</button></td>
-                </tr>
+                {{-- Contoh data dummy --}}
+                @php
+                    $servers = [
+                        ['id' => 1, 'nama' => 'ROUTER', 'ip' => '-', 'aplikasi' => '-', 'url' => '-', 'status' => 'Aktif'],
+                        ['id' => 2, 'nama' => 'SERVER', 'ip' => '-', 'aplikasi' => 'SIEHAN', 'url' => 'siehan.kemhan.go.id', 'status' => 'Aktif'],
+                        ['id' => 3, 'nama' => 'STORAGE', 'ip' => '-', 'aplikasi' => 'SIEHAN', 'url' => 'siehan.kemhan.go.id', 'status' => 'Aktif'],
+                        ['id' => 4, 'nama' => 'SERVER', 'ip' => '192.168.1.6', 'aplikasi' => 'CLOUD STORAGE - PUSDATIN CLOUD', 'url' => '192.168.1.6', 'status' => 'Maintenance'],
+                        ['id' => 5, 'nama' => 'SERVER', 'ip' => '192.168.1.7', 'aplikasi' => 'CMS - PUSDATIN CLOUD', 'url' => 'http://192.168.1.6:88/', 'status' => 'Aktif'],
+                        ['id' => 6, 'nama' => 'SERVER', 'ip' => '192.168.1.8', 'aplikasi' => 'DOCKER MANAGEMENT - PUSDATIN CLOUD', 'url' => 'http://192.168.1.6:9000/', 'status' => 'Tidak Aktif'],
+                    ];
+                @endphp
+
+                @foreach ($servers as $index => $server)
+                    <tr>
+                        <td>{{ $index + 1 }}.</td>
+                        <td>{{ $server['nama'] }}</td>
+                        <td>{{ $server['ip'] }}</td>
+                        <td>{{ $server['aplikasi'] }}</td>
+                        <td><a href="#">{{ $server['url'] }}</a></td>
+                        <td>
+                            @if ($server['status'] === 'Aktif')
+                                <span class="badge bg-success">Aktif</span>
+                            @elseif ($server['status'] === 'Maintenance')
+                                <span class="badge bg-warning text-dark">Maintenance</span>
+                            @else
+                                <span class="badge bg-danger">Tidak Aktif</span>
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{ route('kelolaServer.detail', $server['id']) }}" class="btn btn-light btn-sm">
+                                <i class="fa fa-eye"></i> Detail
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
