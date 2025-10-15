@@ -1,98 +1,123 @@
 @extends('layouts.app')
 
-@section('title', 'Kelola Website')
+@section('title', 'Kelola Pengguna')
 
 @section('content')
 <div class="container-fluid px-4 py-4">
 
-    <h3 class="fw-bold mb-4">Kelola Website</h3>
+  <h3 class="fw-bold mb-4">Kelola Pengguna</h3>
 
-    {{-- Statistik --}}
-    <div class="row mb-4">
-        <div class="col-md-3">
-            <div class="card text-center shadow-sm border-0 bg-white py-3">
-                <h5 class="fw-bold mb-1">Total</h5>
-                <h4>{{ $total }}</h4>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center shadow-sm border-0 bg-white py-3">
-                <h5 class="fw-bold mb-1">Aktif</h5>
-                <h4>{{ $aktif }}</h4>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center shadow-sm border-0 bg-white py-3">
-                <h5 class="fw-bold mb-1">Maintenance</h5>
-                <h4>{{ $maintenance }}</h4>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-center shadow-sm border-0 bg-white py-3">
-                <h5 class="fw-bold mb-1">Tidak Aktif</h5>
-                <h4>{{ $tidakAktif }}</h4>
-            </div>
-        </div>
+  {{-- Filter dan Generate --}}
+  <div class="d-flex align-items-end justify-content-start gap-3 mb-4 flex-wrap">
+    <div>
+      <label for="role" class="form-label fw-semibold">Role</label>
+      <select id="role" class="form-select shadow-sm rounded-3">
+        <option>Semua</option>
+        <option>User</option>
+        <option>Admin</option>
+      </select>
     </div>
 
-    {{-- Pencarian dan Tambah --}}
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <div class="col-md-4">
-            <input type="text" class="form-control rounded-pill" placeholder="Cari App/Server/Admin...">
-        </div>
-        <a href="{{ route('website.create') }}" class="btn btn-maroon text-white px-4 rounded-pill">
-            + Tambah Aplikasi
-        </a>
+    <div>
+      <label for="status" class="form-label fw-semibold">Status</label>
+      <select id="status" class="form-select shadow-sm rounded-3">
+        <option>Semua</option>
+        <option>Aktif</option>
+        <option>Nonaktif</option>
+      </select>
     </div>
 
-    {{-- Daftar Website --}}
-    <div class="row g-3">
-        @foreach($websites as $web)
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0 p-3" 
-                 style="border-radius: 15px; background-color: #fff;">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <h5 class="fw-bold">{{ $web->nama }}</h5>
-                    <span class="badge 
-                        @if($web->status == 'Aktif') bg-success 
-                        @elseif($web->status == 'Maintenance') bg-warning 
-                        @else bg-danger @endif">
-                        {{ $web->status }}
-                    </span>
-                </div>
-
-                <p class="mb-1">
-                    <a href="{{ $web->url }}" target="_blank">{{ $web->url }}</a>
-                </p>
-                <p class="mb-1">
-                    <i class="bi bi-hdd"></i> {{ $web->server }}
-                </p>
-                <p class="mb-2">
-                    <i class="bi bi-person-fill"></i> {{ $web->bidang }}
-                </p>
-
-                <div class="d-flex justify-content-between mt-2">
-                    <a href="{{ route('website.show', $web->id) }}" class="btn btn-light border">Detail</a>
-                    <a href="{{ route('website.edit', $web->id) }}" class="btn btn-outline-secondary">Edit</a>
-                    <form action="{{ route('website.destroy', $web->id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus website ini?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        @endforeach
+    <div>
+      <label for="bidang" class="form-label fw-semibold">Bidang</label>
+      <select id="bidang" class="form-select shadow-sm rounded-3">
+        <option>Semua</option>
+        <option>Banglola</option>
+        <option>Infratik</option>
+      </select>
     </div>
+
+    <div class="ms-auto">
+      <button class="btn btn-maroon text-white px-4 py-2 fw-semibold rounded-pill">Generate</button>
+    </div>
+  </div>
+
+  {{-- Tabel Pengguna --}}
+  <div class="card shadow-sm border-0">
+    <div class="card-body">
+      <table class="table align-middle text-center">
+        <thead class="table-light">
+          <tr>
+            <th>No</th>
+            <th>Nama Lengkap</th>
+            <th>Username / Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Bidang</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Andi Saputra</td>
+            <td>andi01@gmail.com</td>
+            <td>User</td>
+            <td><span class="badge bg-success px-3 py-2">Aktif</span></td>
+            <td>Banglola</td>
+            <td>
+              <button class="btn btn-light btn-sm border rounded-pill"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-light btn-sm border rounded-pill"><i class="bi bi-trash"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Sinta Rahma</td>
+            <td>sinta@email.com</td>
+            <td>Admin</td>
+            <td><span class="badge bg-danger px-3 py-2">Nonaktif</span></td>
+            <td>Infratik</td>
+            <td>
+              <button class="btn btn-light btn-sm border rounded-pill"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-light btn-sm border rounded-pill"><i class="bi bi-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
-{{-- Style tambahan --}}
+{{-- Style Tambahan --}}
 <style>
-    .btn-maroon {
-        background-color: #7A1313;
-    }
-    .btn-maroon:hover {
-        background-color: #5e0e0e;
-    }
+  body {
+    background-color: #f5f5f9;
+  }
+
+  .form-select {
+    min-width: 180px;
+    padding: 10px;
+  }
+
+  .btn-maroon {
+    background-color: #7A1313;
+    border: none;
+  }
+
+  .btn-maroon:hover {
+    background-color: #5e0e0e;
+  }
+
+  .card {
+    border-radius: 15px;
+  }
+
+  .table th {
+    font-weight: 600;
+    background-color: #fafafa;
+  }
+
+  .badge {
+    border-radius: 8px;
+  }
 </style>
 @endsection

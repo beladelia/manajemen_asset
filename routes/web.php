@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ServerController;
+use App\Http\Controllers\WebsiteController;
 
 // Redirect root ke login
 Route::get('/', function () {
@@ -46,9 +47,8 @@ Route::middleware('auth')->group(function () {
     // =====================
     // 🌐 Kelola Website
     // =====================
-    Route::get('/kelola-website', function () {
-        return view('kelolaWebsite');
-    })->name('kelolaWebsite');
+
+    Route::get('/kelola-website', [WebsiteController::class, 'index'])->name('kelolaWebsite');;
 
     // =====================
     // 📊 Kelola Laporan
