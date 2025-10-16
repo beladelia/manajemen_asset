@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'role_id',
         'status',
+        'bidang_id', // ✅ tambahkan juga ini biar bisa diisi mass assignment
     ];
 
     // Kolom yang disembunyikan saat serialisasi (misalnya di API response)
@@ -43,5 +44,11 @@ class User extends Authenticatable
         if ($value) {
             $this->attributes['password'] = bcrypt($value);
         }
+    }
+
+    // Relasi ke tabel bidang
+    public function bidang()
+    {
+        return $this->belongsTo(Bidang::class, 'bidang_id');
     }
 }

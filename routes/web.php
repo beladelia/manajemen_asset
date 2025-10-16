@@ -4,11 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\PimpinanController;
 
 // Redirect root ke login
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', fn() => redirect()->route('login'));
 
 // =====================
 // 🧭 Guest Routes
@@ -23,47 +24,44 @@ Route::middleware('guest')->group(function () {
 // =====================
 Route::middleware('auth')->group(function () {
 
-    // Dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    // ========================== 👑 SUPERADMIN ==========================
+    Route::middleware('role:superadmin')->group(function () {
+        Route::get('/dashboard', [SuperAdminController::class, 'index'])->name('dashboard');
 
-    // =====================
-    // 💾 Kelola Server
-    // =====================
-    Route::get('/kelola-server', function () {
-        return view('kelolaServer');
-    })->name('kelolaServer');
+        // Kelola Server
+        Route::get('/kelola-server', [ServerController::class, 'index'])->name('kelolaServer');
+        Route::get('/kelola-server/{id}', [ServerController::class, 'show'])->name('kelolaServer.detail');
+        Route::get('/kelola-server/{id}/edit', [ServerController::class, 'edit'])->name('server.edit');
+        Route::delete('/kelola-server/{id}', [ServerController::class, 'destroy'])->name('server.destroy');
 
-    // 🔍 Detail Server
-    Route::get('/kelola-server/{id}', [ServerController::class, 'show'])->name('kelolaServer.detail');
+        // Kelola Website
+        Route::get('/kelola-website', [WebsiteController::class, 'index'])->name('kelolaWebsite');
 
-    // ✏️ Edit Server
-    Route::get('/kelola-server/{id}/edit', [ServerController::class, 'edit'])->name('server.edit');
+        // Kelola Laporan
+        Route::get('/kelola-laporan', fn() => view('kelolaLaporan'))->name('kelolaLaporan');
 
-    // 🗑️ Delete Server (🔧 nama route diganti supaya sesuai dengan Blade)
-    Route::delete('/kelola-server/{id}', [ServerController::class, 'destroy'])->name('server.destroy');
+        // Kelola Pengguna
+        Route::get('/kelola-pengguna', fn() => view('kelolaPengguna'))->name('kelolaPengguna');
+    });
 
-    // =====================
-    // 🌐 Kelola Website
-    // =====================
+    // ========================== 🧩 ADMIN ==========================
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
-    Route::get('/kelola-website', [WebsiteController::class, 'index'])->name('kelolaWebsite');;
+        // Admin bisa kelola server/website sesuai bidang_id-nya
+        Route::get('/admin/server', [ServerController::class, 'index'])->name('admin.server');
+        Route::get('/admin/website', [WebsiteController::class, 'index'])->name('admin.website');
+    });
 
-    // =====================
-    // 📊 Kelola Laporan
-    // =====================
-    Route::get('/kelola-laporan', function () {
-        return view('kelolaLaporan');
-    })->name('kelolaLaporan');
+    // ========================== 🧠 PIMPINAN ==========================
+    Route::middleware('role:pimpinan')->group(function () {
+        Route::get('/pimpinan', [PimpinanController::class, 'index'])->name('pimpinan.dashboard');
+        // View-only halaman laporan, website, server
+        Route::get('/pimpinan/laporan', fn() => view('pimpinan.laporan'))->name('pimpinan.laporan');
+        Route::get('/pimpinan/website', [WebsiteController::class, 'index'])->name('pimpinan.website');
+        Route::get('/pimpinan/server', [ServerController::class, 'index'])->name('pimpinan.server');
+    });
 
-    // =====================
-    // 👤 Kelola Pengguna
-    // =====================
-    Route::get('/kelola-pengguna', function () {
-        return view('kelolaPengguna');
-    })->name('kelolaPengguna');
-
-    // Logout
+    // ===================== 🚪 Logout =====================
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
