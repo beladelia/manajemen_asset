@@ -117,16 +117,19 @@
 
     // Pie Chart Website
     new Chart(document.getElementById('websiteChart'), {
-        type: 'pie',
+        type: 'bar',
         data: websiteData,
         options: {
             responsive: true,
             plugins: {
-                legend: { position: 'bottom' },
+                legend: { display: false },
                 title: {
                     display: true,
                     text: 'Status Website'
                 }
+            },
+            scales: {
+                y: { beginAtZero: true }
             }
         }
     });
