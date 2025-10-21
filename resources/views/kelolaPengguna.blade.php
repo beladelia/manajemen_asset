@@ -152,7 +152,7 @@
                         </tr>
                         <tr>
                             <td class="px-3">4</td>
-                            <td>Nayla Zharif</td>
+                            <td>Nayla Zharifa</td>
                             <td>naynay@gmail.com</td>
                             <td>Admin Bidang</td>
                             <td><span class="badge rounded-pill px-3 py-2" style="background-color: #e2e3e5; color: #383d41; font-weight: 500;">NonAktif</span></td>
