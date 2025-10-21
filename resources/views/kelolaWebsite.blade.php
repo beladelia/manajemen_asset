@@ -365,19 +365,36 @@
 <div class="modal fade" id="hapusModal" tabindex="-1" aria-labelledby="hapusModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-0 rounded-4 shadow">
-      <div class="modal-body text-center p-4">
-        <div class="mb-3">
-          <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 2rem;"></i>
-        </div>
 
-        <h5 class="fw-bold mb-2">Hapus Data Aplikasi?</h5>
-        <p class="text-muted mb-4" id="hapusNamaApp">
-          Apakah Anda yakin ingin menghapus aplikasi ini dari daftar Aplikasi?
+      <!-- Header Merah -->
+      <div class="modal-header" style="background-color: #7a0000; color: #fff; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+        <h5 class="modal-title fw-bold">Konfirmasi Hapus</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body text-center p-4">
+        <i class="bi bi-exclamation-triangle-fill text-danger mb-3" style="font-size: 3rem;"></i>
+
+        <p class="mb-4 fs-6">
+          Apakah Anda yakin ingin menghapus aplikasi <br>
+          <span class="fw-bold" id="hapusNamaApp">"Portal Kemhan RI"</span>?
         </p>
 
-        <div class="d-flex justify-content-center gap-2">
-          <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Batal</button>
-          <button type="button" class="btn btn-danger px-4" id="konfirmasiHapusBtn">Ya, hapus</button>
+        <div class="alert border-0 rounded-3 py-2" 
+          style="background-color: #fff3cd; color: #5c4800; font-size: 0.9rem;">
+          <div class="form-check text-start ms-2">
+          <input class="form-check-input" type="checkbox" id="arsipCheck">
+          <label class="form-check-label" for="arsipCheck">
+           Data akan dipindahkan ke Arsip Sementara dan dapat dipulihkan dalam waktu 30 hari sebelum dihapus permanen.
+    </label>
+  </div>
+</div>
+
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <button type="button" class="btn btn-light border px-4 fw-semibold" data-bs-dismiss="modal">Batal</button>
+          <button type="button" class="btn text-white px-4 fw-semibold" id="konfirmasiHapusBtn" style="background-color: #d32f2f;">Ya, Hapus</button>
         </div>
       </div>
     </div>
@@ -564,12 +581,12 @@
   let appToEdit = null;
 
   // Hapus
+
   document.querySelectorAll('.btn-hapus').forEach(btn => {
     btn.addEventListener('click', function () {
       const card = this.closest('.card');
       const appName = card.querySelector('h5').innerText;
-      document.getElementById('hapusNamaApp').innerText =
-        `Apakah Anda yakin ingin menghapus ${appName} dari daftar Aplikasi?`;
+      document.getElementById('hapusNamaApp').innerText = `"${appName}"`;
       appToDelete = appName;
       const hapusModal = new bootstrap.Modal(document.getElementById('hapusModal'));
       hapusModal.show();
@@ -577,7 +594,12 @@
   });
 
   document.getElementById('konfirmasiHapusBtn').addEventListener('click', function () {
-    alert(`Aplikasi "${appToDelete}" berhasil dihapus (simulasi).`);
+    const isArsip = document.getElementById('arsipCheck').checked;
+    if (isArsip) {
+      alert(`"${appToDelete}" dipindahkan ke Arsip Sementara (simulasi).`);
+    } else {
+      alert(`"${appToDelete}" dihapus permanen (simulasi).`);
+    }
     const modal = bootstrap.Modal.getInstance(document.getElementById('hapusModal'));
     modal.hide();
   });
