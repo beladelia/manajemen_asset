@@ -36,7 +36,7 @@
     <div class="table-card">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex">
-                <input type="text" class="form-control me-2" placeholder="Cari nama/URL/aplikasi/IP" style="width: 280px;">
+                <input type="text" class="form-control me-2" placeholder="Cari nama/aplikasi/IP" style="width: 280px;">
                 <select class="form-select" style="width: 130px;">
                     @for ($i = 1; $i <= 17; $i++)
                         <option>Rack {{ $i }}</option>
@@ -55,7 +55,8 @@
                     <th>Nama Perangkat</th>
                     <th>IP</th>
                     <th>Aplikasi</th>
-                    <th>URL/Domain</th>
+                    <th>Bidang</th>
+                    <th>Unit</th>
                     <th>Status</th>
                     <th>Aksi</th>
                 </tr>
@@ -64,12 +65,12 @@
                 {{-- Contoh data dummy --}}
                 @php
                     $servers = [
-                        ['id' => 1, 'nama' => 'ROUTER', 'ip' => '-', 'aplikasi' => '-', 'url' => '-', 'status' => 'Aktif'],
-                        ['id' => 2, 'nama' => 'SERVER', 'ip' => '-', 'aplikasi' => 'SIEHAN', 'url' => 'siehan.kemhan.go.id', 'status' => 'Aktif'],
-                        ['id' => 3, 'nama' => 'STORAGE', 'ip' => '-', 'aplikasi' => 'SIEHAN', 'url' => 'siehan.kemhan.go.id', 'status' => 'Aktif'],
-                        ['id' => 4, 'nama' => 'SERVER', 'ip' => '192.168.1.6', 'aplikasi' => 'CLOUD STORAGE - PUSDATIN CLOUD', 'url' => '192.168.1.6', 'status' => 'Maintenance'],
-                        ['id' => 5, 'nama' => 'SERVER', 'ip' => '192.168.1.7', 'aplikasi' => 'CMS - PUSDATIN CLOUD', 'url' => 'http://192.168.1.6:88/', 'status' => 'Aktif'],
-                        ['id' => 6, 'nama' => 'SERVER', 'ip' => '192.168.1.8', 'aplikasi' => 'DOCKER MANAGEMENT - PUSDATIN CLOUD', 'url' => 'http://192.168.1.6:9000/', 'status' => 'Tidak Aktif'],
+                        ['id' => 1, 'nama' => 'ROUTER', 'ip' => '-', 'aplikasi' => '-', 'bidang' => 'PUSDATIN', 'unit' => 'U-01 s.d U-02', 'status' => 'Aktif'],
+                        ['id' => 2, 'nama' => 'SERVER', 'ip' => '-', 'aplikasi' => 'SIEHAN', 'bidang' => 'BANGLOLA', 'unit' => 'U-05 s.d U-06', 'status' => 'Aktif'],
+                        ['id' => 3, 'nama' => 'STORAGE', 'ip' => '-', 'aplikasi' => 'SIEHAN', 'bidang' => 'INFRA TIK', 'unit' => 'U-07 s.d U-08', 'status' => 'Aktif'],
+                        ['id' => 4, 'nama' => 'SERVER', 'ip' => '192.168.1.6', 'aplikasi' => 'CLOUD STORAGE - PUSDATIN CLOUD', 'bidang' => 'INFRA TIK', 'unit' => 'U-10 s.d U-12', 'status' => 'Maintenance'],
+                        ['id' => 5, 'nama' => 'SERVER', 'ip' => '192.168.1.7', 'aplikasi' => 'CMS - PUSDATIN CLOUD', 'bidang' => 'PAMSIS', 'unit' => 'U-12 s.d U-13', 'status' => 'Aktif'],
+                        ['id' => 6, 'nama' => 'SERVER', 'ip' => '192.168.1.8', 'aplikasi' => 'DOCKER MANAGEMENT - PUSDATIN CLOUD', 'bidang' => 'BANGLOLA', 'unit' => 'U-15 s.d U-16', 'status' => 'Tidak Aktif'],
                     ];
                 @endphp
 
@@ -79,7 +80,8 @@
                         <td>{{ $server['nama'] }}</td>
                         <td>{{ $server['ip'] }}</td>
                         <td>{{ $server['aplikasi'] }}</td>
-                        <td><a href="#">{{ $server['url'] }}</a></td>
+                        <td>{{ $server['bidang'] }}</td>
+                        <td>{{ $server['unit'] }}</td>
                         <td>
                             @if ($server['status'] === 'Aktif')
                                 <span class="badge bg-success">Aktif</span>
@@ -113,28 +115,24 @@
                 <form>
                     <div class="mb-3">
                         <label class="form-label">Nama Perangkat</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" placeholder="Contoh: SERVER 1">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">IP Address</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" placeholder="Contoh: 192.168.1.10">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Aplikasi yang Terhubung</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" placeholder="Contoh: CMS - PUSDATIN CLOUD">
                     </div>
                     <div class="row">
-                        <div class="col-md-8 mb-3">
-                            <label class="form-label">URL/Domain</label>
-                            <input type="text" class="form-control">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Bidang</label>
+                            <input type="text" class="form-control" placeholder="Contoh: PUSDATIN">
                         </div>
-                        <div class="col-md-4 mb-3">
-                            <label class="form-label">Lokasi Rak Server</label>
-                            <select class="form-select">
-                                @for ($i = 1; $i <= 17; $i++)
-                                    <option>Rack {{ $i }}</option>
-                                @endfor
-                            </select>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Unit</label>
+                            <input type="text" class="form-control" placeholder="Contoh: U-12 s.d U-13">
                         </div>
                     </div>
                 </form>

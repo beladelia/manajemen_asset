@@ -96,11 +96,6 @@
                <i class="fa fa-users"></i> Kelola Pengguna
             </a>
         </nav>
-
-        <form action="{{ route('logout') }}" method="POST" class="mt-4 text-center">
-            @csrf
-            <button type="submit" class="btn btn-danger w-75">Logout</button>
-        </form>
     </div>
 
     <!-- Main Content -->
@@ -108,9 +103,31 @@
         <!-- Navbar -->
         <div class="navbar-custom d-flex justify-content-between align-items-center">
             <h5 class="m-0">@yield('title','Dashboard')</h5>
-            <div>
+            <div class="d-flex align-items-center position-relative">
                 <i class="fa fa-bell me-3"></i>
-                <span><i class="fa fa-user-circle"></i> Kementerian Pertahanan RI</span>
+
+                <!-- Dropdown User -->
+                <div class="dropdown">
+                    <a class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" 
+                       href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user-circle fa-lg me-2"></i>
+                        <span>Kementerian Pertahanan RI</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="fa fa-user me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa fa-cog me-2"></i>Settings</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa fa-question-circle me-2"></i>Help Center</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="fa fa-sign-out-alt me-2"></i>Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
